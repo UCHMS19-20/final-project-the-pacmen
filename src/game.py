@@ -1,11 +1,7 @@
-import time
+#in order to run the "app", it needs to get it from somewhere
+from app_place import * 
 
-print("Welcome to the sample repository!")
-time.sleep(1)
-print("All the code for your game should go in the src folder")
-time.sleep(1)
-print("Now delete this file and make your own!")
-print("HI")
-print("HI FROM THOMAS")
-print("APPLE")
-print("onion")
+#this is the file if we want to run the game and stuff
+if __name__ == '__game__':
+    app = App()
+    app.run()
