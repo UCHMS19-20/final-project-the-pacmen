@@ -1,4 +1,5 @@
-import pygame, sys
+import pygame
+import sys
 #we are going to have settings for the game
 #so we need to make a place for the settings
 from settings import *
