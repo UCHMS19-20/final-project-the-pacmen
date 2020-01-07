@@ -22,7 +22,7 @@ class App:
 
     def run(self):
         while self.running:
-            if self.state == 'intro':
+            if self.state == 'start':
                 self.start_events()
                 self.start_update()
                 self.start_draw()
@@ -37,12 +37,14 @@ class App:
         font = pygame.font.SysFont(font_name, size)
         text = font.render(words, False, color)
         text_size = text.get_size()
+        pos[0] = pos[0]-text_size[0]//2
+        pos[1] = pos[1]-text_size[1]//2
         screen.blit(text, pos)
 
 
 #############################################################################
 
-    def intro_events(self):
+    def start_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -55,13 +57,12 @@ class App:
         pass
     
 ############################################################################   
-
+#this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
     def start_draw(self): 
         #this makes the background collor black
         self.screen.fill(BLACK)
-        self.draw_text('CLICK SPACE BAR', self.screen, (210, HEIGHT//2), START_TEXT_SIZE, (168, 130, 60), START_FONT)
+        self.draw_text('CLICK SPACE BAR', self.screen, [WIDTH//2, HEIGHT//2], START_TEXT_SIZE, (168, 130, 60), START_FONT)
         pygame.display.update()
-
 
 
 
