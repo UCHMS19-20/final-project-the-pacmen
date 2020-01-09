@@ -3,7 +3,7 @@ WIDTH, HEIGHT = 450, 600
 FPS = 60 
 #color settings
 BLACK = (0,0,0)
-
+RED = (208,22,22)
 # font settings
 START_TEXT_SIZE = 14
 START_FONT = 'Minecraftia'
