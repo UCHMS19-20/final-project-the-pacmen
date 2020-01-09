@@ -6,6 +6,6 @@ BLACK = (0,0,0)
 
 # font settings
 START_TEXT_SIZE = 14
-START_FONT = 'arial black'
+START_FONT = 'Minecraftia'
 #player settings
 #enemy settings

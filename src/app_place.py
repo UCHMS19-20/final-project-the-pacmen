@@ -61,7 +61,7 @@ class App:
     def start_draw(self): 
         #this makes the background collor black
         self.screen.fill(BLACK)
-        self.draw_text('CLICK SPACE BAR', self.screen, [WIDTH//2, HEIGHT//2], START_TEXT_SIZE, (168, 130, 60), START_FONT)
+        self.draw_text('PUSH THE SPACE BAR BABY', self.screen, [WIDTH//2, HEIGHT//2], START_TEXT_SIZE, (168, 130, 60), START_FONT)
         pygame.display.update()
 
 
