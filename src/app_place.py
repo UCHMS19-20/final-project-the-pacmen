@@ -17,6 +17,8 @@ class App:
         self.clock = pygame.time.Clock()
         self.running = True 
         self.state = 'start'
+        self.cell_width = WIDTH//28
+        self.cell_height = HEIGHT//30
 
         self.load()
 ############################################################################
@@ -53,6 +55,11 @@ class App:
         self.background = pygame.image.load('src/background.png')
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
+    def draw_grid(self):
+        for x in range(WIDTH//self.cell_width):
+            pygame.draw.line(self.screen, GREY, (x*self.cell_width, 0), (x*self.cell_width, HEIGHT))
+        for x in range(HEIGHT//self.cell_height):
+            pygame.draw.line(self.screen, GREY, (0, x*self.cell_height), (WIDTH, x*self.cell_height))
 
 ##########################START FUNCTIONS###################################################
 
@@ -96,7 +103,7 @@ class App:
     def playing_draw(self): 
         #this makes the background collor black
         self.screen.blit(self.background, (0,0))
-       
+        self.draw_grid()
         pygame.display.update() 
 
 
