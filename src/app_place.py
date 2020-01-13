@@ -18,6 +18,7 @@ class App:
         self.running = True 
         self.state = 'start'
 
+        self.load()
 ############################################################################
 
     def run(self):
@@ -47,6 +48,10 @@ class App:
             pos[0] = pos[0]-text_size[0]//2
             pos[1] = pos[1]-text_size[1]//2
         screen.blit(text, pos)
+
+    def load(self):
+        self.background = pygame.image.load('the maze.png')
+        self.background = pygame.transform.scale(self.background, (WIDTH, HEGIHT))
 
 
 ##########################START FUNCTIONS###################################################
@@ -90,7 +95,7 @@ class App:
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
     def playing_draw(self): 
         #this makes the background collor black
-        self.screen.fill(RED)
+        self.screen.blit(self.background, (0,0))
        
         pygame.display.update() 
 

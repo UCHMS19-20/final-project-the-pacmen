@@ -1,5 +1,5 @@
 #these are the screen setings
-WIDTH, HEIGHT = 450, 600 
+WIDTH, HEIGHT = 560, 620
 FPS = 60 
 #color settings
 BLACK = (0,0,0)
