@@ -27,12 +27,12 @@ class App:
                 self.start_events()
                 self.start_update()
                 self.start_draw()
-                if self.state == 'playing':
-                    self.playing_events()
-                    self.playing_update()
-                    self.playing_draw()
-                else:
-                    self.running = False
+            elif self.state == 'playing':
+                self.playing_events()
+                self.playing_update()
+                self.playing_draw()
+            else:
+                self.running = False
             self.clock.tick(FPS)
 
         pygame.quit()
@@ -50,18 +50,18 @@ class App:
         screen.blit(text, pos)
 
     def load(self):
-        self.background = pygame.image.load('the maze.png')
-        self.background = pygame.transform.scale(self.background, (WIDTH, HEGIHT))
+        self.background = pygame.image.load('src/background.png')
+        self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
 
 
 ##########################START FUNCTIONS###################################################
 
     def start_events(self):
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    self.state = 'playing'
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.state = 'playing'
     
 #############################################################################
 
