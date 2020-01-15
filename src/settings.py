@@ -1,5 +1,7 @@
 #these are the screen setings
 #makes the margins for the test on the maze
+from pygame.math import Vector2 as vec 
+
 WIDTH, HEIGHT = 610, 670
 FPS = 60
 TOP_BOTTOM_MARGIN = 50
@@ -12,6 +14,10 @@ GREY = (107, 107, 107)
 WHITE = (255, 255, 255)
 # font settings
 START_TEXT_SIZE = 14
-START_FONT = 'Minecraftia'
+START_FONT = 'arial black'
+
+
 #player settings
+PLAYER_START_POS = vec(1,1)
+
 #enemy settings

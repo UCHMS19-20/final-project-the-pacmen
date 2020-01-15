@@ -19,6 +19,7 @@ class App:
         self.state = 'start'
         self.cell_width = MAZE_WIDTH//28
         self.cell_height = MAZE_HEIGHT//30
+        self.player = Player(self, PLAYER_START_POS)
 
         self.load()
 ############################################################################
