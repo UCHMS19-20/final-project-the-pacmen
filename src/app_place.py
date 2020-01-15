@@ -3,6 +3,7 @@ import sys
 #we are going to have settings for the game
 #so we need to make a place for the settings
 from settings import *
+from player_place import*
 
 pygame.init()
 #this could be used for velocity, acceleration, position, etc.
@@ -109,6 +110,7 @@ class App:
         #draws text once in the actual game
         self.draw_text('CURRENT SCORE: 0', self.screen, [60,0], 18, WHITE, START_FONT)
         self.draw_text('HIGH SCORE: 0', self.screen, [WIDTH//2+60,0], 18, WHITE, START_FONT)
+        self.player.draw()
         pygame.display.update() 
 
 
