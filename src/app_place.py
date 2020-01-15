@@ -94,11 +94,21 @@ class App:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+                #used to control the player to move around
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    self.player.move(vec(-1,0))
+                if event.key == pygame.K_RIGHT:
+                     self.player.move(vec(1,0))
+                if event.key == pygame.K_UP:
+                     self.player.move(vec(0,-1))
+                if event.key == pygame.K_DOWN:
+                     self.player.move(vec(0,1))
     
 #############################################################################
 
     def playing_update(self):
-        pass
+        self.player.update()
     
 ############################################################################   
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
