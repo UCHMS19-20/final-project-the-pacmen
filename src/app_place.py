@@ -21,6 +21,9 @@ class App:
         self.cell_width = MAZE_WIDTH//28
         self.cell_height = MAZE_HEIGHT//30
         self.player = Player(self, PLAYER_START_POS)
+        self.walls = []
+        self.coins = []
+        
 
         self.load()
 ############################################################################
@@ -56,12 +59,24 @@ class App:
     def load(self):
         self.background = pygame.image.load('src/background.png')
         self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
+        
+        #opening the walls file and creating walls list with coordinates of walls
+        with open("walls.txt", 'r') as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == "1":
+                        self.walls.append(vec(xidx, yidx))
+                    elif char == "C":
+                        self.coins.append(vec(xidx, yidx))
+        #print(self.walls)
 
     def draw_grid(self):
         for x in range(WIDTH//self.cell_width):
             pygame.draw.line(self.background, GREY, (x*self.cell_width, 0), (x*self.cell_width, HEIGHT))
         for x in range(HEIGHT//self.cell_height):
             pygame.draw.line(self.background, GREY, (0, x*self.cell_height), (WIDTH, x*self.cell_height))
+        for coin in self.coins:
+            pygame.draw.rect(self.background, (170, 180, 35), (coin.x*self.cell_width, coin.y*self.cell_height, self.cell_width, self.cell_height))
 
 ##########################START FUNCTIONS###################################################
 
@@ -116,12 +131,17 @@ class App:
         self.screen.fill(BLACK) 
         #this makes the background collor black
         self.screen.blit(self.background, (TOP_BOTTOM_MARGIN//2, TOP_BOTTOM_MARGIN//2))
-        self.draw_grid()
+        self.draw_coins()
+        #self.draw_grid()
         #draws text once in the actual game
-        self.draw_text('CURRENT SCORE: 0', self.screen, [60,0], 18, WHITE, START_FONT)
+        self.draw_text('CURRENT SCORE: {}'.format(self.player.current_score), self.screen, [60,0], 18, WHITE, START_FONT)
         self.draw_text('HIGH SCORE: 0', self.screen, [WIDTH//2+60,0], 18, WHITE, START_FONT)
         self.player.draw()
         pygame.display.update() 
+    
 
 
 
+    def draw_coins(self):
+        for coin in self.coins:
+            pygame.draw.circle(self.screen, (70, 100, 200), (int(coin.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(coin.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
