@@ -1,5 +1,6 @@
 import pygame
 import sys
+import copy
 #we are going to have settings for the game
 #so we need to make a place for the settings
 from settings import *
@@ -19,8 +20,8 @@ class App:
         self.clock = pygame.time.Clock()
         self.running = True 
         self.state = 'start'
-        self.cell_width = MAZE_WIDTH//28
-        self.cell_height = MAZE_HEIGHT//30
+        self.cell_width = MAZE_WIDTH//COLS
+        self.cell_height = MAZE_HEIGHT//ROWS
         self.walls = []
         self.coins = []
         self.enemies = []
@@ -45,6 +46,10 @@ class App:
                 self.playing_events()
                 self.playing_update()
                 self.playing_draw()
+            elif self.state == 'game over':
+                self.game_over_events()
+                self.game_over_update()
+                self.game_over_draw()
             else:
                 self.running = False
             self.clock.tick(FPS)
@@ -92,10 +97,33 @@ class App:
             pygame.draw.line(self.background, GREY, (x*self.cell_width, 0), (x*self.cell_width, HEIGHT))
         for x in range(HEIGHT//self.cell_height):
             pygame.draw.line(self.background, GREY, (0, x*self.cell_height), (WIDTH, x*self.cell_height))
-        for coin in self.coins:
-            pygame.draw.rect(self.background, (170, 180, 35), (coin.x*self.cell_width, coin.y*self.cell_height, self.cell_width, self.cell_height))
+        #for coin in self.coins:
+            #pygame.draw.rect(self.background, (170, 180, 35), (coin.x*self.cell_width, coin.y*self.cell_height, self.cell_width, self.cell_height))
 
 ##########################START FUNCTIONS###################################################
+
+    def reset(self):
+        self.player.lives = 3
+        self.player.current_score = 0
+        self.player.grid_pos = vec(self.player.starting_pos)
+        self.player.pix_pos = self.player.get_pix_pos()
+        self.player.direction *= 0 
+        for enemy in self.enemies:
+            enemy.grid_pos = vec(enemy.starting_pos)
+            enemy.pix_pos = enemy.get_pix_pos()
+            enemy.direction *= 0
+        
+        self.coins = []
+        with open("walls.txt", 'r') as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == 'C':
+                        self.coins.append(vec(xidx, yidx))
+        self.state = "playing"
+
+
+
+
 
     def start_events(self):
         for event in pygame.event.get():
@@ -129,13 +157,13 @@ class App:
                 #used to control the player to move around
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    self.player.move(vec(-1,0))
+                    self.player.move(vec(-1, 0))
                 if event.key == pygame.K_RIGHT:
-                     self.player.move(vec(1,0))
+                     self.player.move(vec(1, 0))
                 if event.key == pygame.K_UP:
-                     self.player.move(vec(0,-1))
+                     self.player.move(vec(0, -1))
                 if event.key == pygame.K_DOWN:
-                     self.player.move(vec(0,1))
+                     self.player.move(vec(0, 1))
     
 #############################################################################
 
@@ -143,6 +171,10 @@ class App:
         self.player.update()
         for enemy in self.enemies:
             enemy.update()
+
+        for enemy in self.enemies:
+            if enemy.grid_pos == self.player.grid_pos:
+                self.remove_life()
     
 ############################################################################   
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
@@ -159,6 +191,19 @@ class App:
         for enemy in self.enemies:
             enemy.draw()
         pygame.display.update() 
+
+    def remove_life(self):
+        self.player.lives -= 1
+        if self.player.lives == 0:
+            self.state = "game over"
+        else:
+            self.player.grid_pos = vec(self.player.starting_pos)
+            self.player.pix_pos = self.player.get_pix_pos()
+            self.player.direction *= 0
+            for enemy in self.enemies:
+                enemy.grid_pos = vec(enemy.starting_pos)
+                enemy.pix_pos = enemy.get_pix_pos()
+                enemy.direction *= 0
     
 
 
@@ -166,3 +211,24 @@ class App:
     def draw_coins(self):
         for coin in self.coins:
             pygame.draw.circle(self.screen, (70, 100, 200), (int(coin.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(coin.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+
+    def game_over_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.reset()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.running = False
+
+    def game_over_update(self):
+        pass
+
+    def game_over_draw(self):
+        self.screen.fill(BLACK)
+        quit_text = "Press ESC to QUIT"
+        again_text = "Press SPACE to PLAY AGAIN"
+        self.draw_text("GAME OVER", self.screen, [WIDTH//2, 100], 52, RED, "arial", centered=True)
+        self.draw_text(again_text, self.screen, [WIDTH//2, HEIGHT//2], 36, (190, 190, 190), "arial", centered=True)   
+        self.draw_text(quit_text, self.screen, [WIDTH//2, HEIGHT//1.5], 36, (190, 190, 190), "arial", centered=True)
+        pygame.display.update()     
