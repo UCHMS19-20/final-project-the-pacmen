@@ -11,11 +11,12 @@ class Player:
         self.stored_direction = None
         self.able_to_move = True
         self.current_score = 0
+        self.speed = 2
 
 #this is check the position of the pacman himself. ALL OF THIS LOCKS PACMAN INTO PLACES IN THE X,Y grid.
     def update(self):
         if self.able_to_move:
-             self.pix_pos += self.direction
+             self.pix_pos += self.direction*self.speed
         if self.time_to_move():
                 if self.stored_direction != None:
                     self.direction = self.stored_direction
