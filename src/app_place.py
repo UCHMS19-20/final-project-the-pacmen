@@ -3,7 +3,8 @@ import sys
 #we are going to have settings for the game
 #so we need to make a place for the settings
 from settings import *
-from player_place import*
+from player_place import *
+from enemy_place import *
 
 pygame.init()
 #this could be used for velocity, acceleration, position, etc.
@@ -20,12 +21,18 @@ class App:
         self.state = 'start'
         self.cell_width = MAZE_WIDTH//28
         self.cell_height = MAZE_HEIGHT//30
-        self.player = Player(self, PLAYER_START_POS)
         self.walls = []
         self.coins = []
-        
-
+        self.enemies = []
+        self.enemy_pos = []
+        self.p_pos = None
         self.load()
+        self.player = Player(self, self.p_pos)
+        self.make_enemies()
+
+       
+
+      
 ############################################################################
 
     def run(self):
@@ -68,6 +75,15 @@ class App:
                         self.walls.append(vec(xidx, yidx))
                     elif char == "C":
                         self.coins.append(vec(xidx, yidx))
+                    elif char == "P":
+                        self.p_pos = vec(xidx, yidx)
+                    elif char in ["2", "3", "4", "5"]:
+                        self.enemy_pos.append(vec(xidx, yidx))
+                        
+    
+    def make_enemies(self):
+        for pos in self.enemy_pos:
+            self.enemies.append(Enemy(self, pos))
         #print(self.walls)
 
     def draw_grid(self):
@@ -124,6 +140,8 @@ class App:
 
     def playing_update(self):
         self.player.update()
+        for enemy in self.enemies:
+            enemy.update()
     
 ############################################################################   
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
@@ -137,6 +155,8 @@ class App:
         self.draw_text('CURRENT SCORE: {}'.format(self.player.current_score), self.screen, [60,0], 18, WHITE, START_FONT)
         self.draw_text('HIGH SCORE: 0', self.screen, [WIDTH//2+60,0], 18, WHITE, START_FONT)
         self.player.draw()
+        for enemy in self.enemies:
+            enemy.draw()
         pygame.display.update() 
     
 
