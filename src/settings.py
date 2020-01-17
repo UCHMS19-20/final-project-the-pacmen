@@ -12,7 +12,7 @@ COLS = 28
 
 #color settings
 BLACK = (0,0,0)
-RED = (208,22,22)
+RED = (208, 22, 22)
 GREY = (107, 107, 107)
 WHITE = (255, 255, 255)
 PLAYER_COLOR = (190, 194, 15) 

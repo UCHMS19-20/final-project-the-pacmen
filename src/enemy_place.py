@@ -27,8 +27,8 @@ class Enemy:
                 self.move()
        
         # setting grid position in reference to pixel position
-        self.grid_pos[0] = (self.pix_pos[0]-TOP_BOTTOM_MARGIN+self.app.cell_width//2)//self.app.cell_width+1
-        self.grid_pos[1] = (self.pix_pos[1]-TOP_BOTTOM_MARGIN+self.app.cell_height//2)//self.app.cell_height+1
+        self.grid_pos[0] = (self.pix_pos[0]-TOP_BOTTOM_MARGIN + self.app.cell_width//2)//self.app.cell_width+1
+        self.grid_pos[1] = (self.pix_pos[1]-TOP_BOTTOM_MARGIN + self.app.cell_height//2)//self.app.cell_height+1
 
     def draw(self):
         pygame.draw.circle(self.app.screen, self.color, (int(self.pix_pos.x), int(self.pix_pos.y)), self.radius)
@@ -48,7 +48,7 @@ class Enemy:
                 return vec(1, 1)
             if self.app.player.grid_pos[0] > COLS//2 and self.app.player.grid_pos[1] < ROWS//2:
                 return vec(1, ROWS-2)
-            if self.app.player.grid_pos[0] > COLS//2 and self.app.player.grid_pos[1] > ROWS//2:
+            if self.app.player.grid_pos[0] < COLS//2 and self.app.player.grid_pos[1] > ROWS//2:
                 return vec(COLS-2, 1)
             else:
                 return vec(COLS-2, ROWS-2)

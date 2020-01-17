@@ -25,10 +25,10 @@ class App:
         self.walls = []
         self.coins = []
         self.enemies = []
-        self.enemy_pos = []
+        self.e_pos = []
         self.p_pos = None
         self.load()
-        self.player = Player(self, self.p_pos)
+        self.player = Player(self, vec(self.p_pos))
         self.make_enemies()
 
        
@@ -81,15 +81,15 @@ class App:
                     elif char == "C":
                         self.coins.append(vec(xidx, yidx))
                     elif char == "P":
-                        self.p_pos = vec(xidx, yidx)
+                        self.p_pos = [xidx, yidx]
                     elif char in ["2", "3", "4", "5"]:
-                        self.enemy_pos.append(vec(xidx, yidx))
+                        self.e_pos.append([xidx, yidx])
                     elif char == "B":
                         pygame.draw.rect(self.background, BLACK, (xidx*self.cell_width, yidx*self.cell_height, self.cell_width, self.cell_height))
     
     def make_enemies(self):
-        for idx, pos in enumerate(self.enemy_pos):
-            self.enemies.append(Enemy(self, pos, idx))
+        for idx, pos in enumerate(self.e_pos):
+            self.enemies.append(Enemy(self, vec(pos), idx))
         #print(self.walls)
 
     def draw_grid(self):
