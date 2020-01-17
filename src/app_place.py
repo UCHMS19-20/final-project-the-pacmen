@@ -228,7 +228,7 @@ class App:
         self.screen.fill(BLACK)
         quit_text = "Press ESC to QUIT"
         again_text = "Press SPACE to PLAY AGAIN"
-        self.draw_text("GAME OVER", self.screen, [WIDTH//2, 100], 52, RED, "arial", centered=True)
+        self.draw_text("GAME OVER  ¯\_(:/)_/¯", self.screen, [WIDTH//2, 100], 52, RED, "arial", centered=True)
         self.draw_text(again_text, self.screen, [WIDTH//2, HEIGHT//2], 36, (190, 190, 190), "arial", centered=True)   
         self.draw_text(quit_text, self.screen, [WIDTH//2, HEIGHT//1.5], 36, (190, 190, 190), "arial", centered=True)
         pygame.display.update()     
