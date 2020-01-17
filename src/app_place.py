@@ -145,7 +145,7 @@ class App:
         self.draw_text('PUSH THE SPACE BAR BABY', self.screen, [WIDTH//2, HEIGHT//2-50], START_TEXT_SIZE, (168, 130, 60), START_FONT, centered=True)
         self.draw_text('1 PLAYER ONLY', self.screen, [WIDTH//2, HEIGHT//2+50], START_TEXT_SIZE, (31, 100, 136), START_FONT, centered=True)
         self.draw_text('Ms. Gerstein A 3/4', self.screen, [WIDTH//2, HEIGHT//2+100], START_TEXT_SIZE, (168, 130, 60), START_FONT, centered=True)
-        self.draw_text('High Score', self.screen, [4,0], START_TEXT_SIZE, (255, 255, 255), START_FONT)
+        #self.draw_text('High Score', self.screen, [4,0], START_TEXT_SIZE, (255, 255, 255), START_FONT)
         pygame.display.update() 
 
 
@@ -185,8 +185,8 @@ class App:
         self.draw_coins()
         #self.draw_grid()
         #draws text once in the actual game
-        self.draw_text('CURRENT SCORE: {}'.format(self.player.current_score), self.screen, [60,0], 18, WHITE, START_FONT)
-        self.draw_text('HIGH SCORE: 0', self.screen, [WIDTH//2+60,0], 18, WHITE, START_FONT)
+        self.draw_text('CURRENT SCORE: {}'.format(self.player.current_score), self.screen, [200,0], 18, WHITE, START_FONT)
+        #self.draw_text('HIGH SCORE: 0', self.screen, [WIDTH//2+60,0], 18, WHITE, START_FONT)
         self.player.draw()
         for enemy in self.enemies:
             enemy.draw()
