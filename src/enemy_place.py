@@ -89,32 +89,32 @@ class Enemy:
         for cell in self.app.walls:
             if cell.x < 28 and cell.y < 30:
                 grid[int(cell.y)][int(cell.x)] = 1
-            queue = [start]
-            path = []
-            visited = []
-            while queue:
-                current = queue[0]
-                queue.remove(queue[0])
-                visited.append(current)
-                if current == target:
-                    break 
-                else:
-                    neighbors = [[0, -1], [1, 0], [0, 1], [-1, 0]]
-                    for neighbor in neighbors:
-                        if neighbor[0]+current[0] >= 0 and neighbor[0] + current[0] < len(grid[0]):
-                            if neighbor[1]+current[1] >= 0 and neighbor[1] + current[1] < len(grid):
-                                next_cell = [neighbor[0] + current[0], neighbor[1] + current[1]]
-                                if next_cell not in visited:
-                                    if grid[next_cell[1]][next_cell[0]] != 1:
-                                        queue.append(next_cell)
-                                        path.append({"Current": current, "Next": next_cell})
-            shortest = [target]
-            while target != start:
-                for step in path:
-                    if step["Next"] == target:
-                        target = step["Current"]
-                        shortest.insert(0, step["Current"])
-            return shortest
+        queue = [start]
+        path = []
+        visited = []
+        while queue:
+            current = queue[0]
+            queue.remove(queue[0])
+            visited.append(current)
+            if current == target:
+                break 
+            else:
+                neighbors = [[0, -1], [1, 0], [0, 1], [-1, 0]]
+                for neighbor in neighbors:
+                    if neighbor[0]+current[0] >= 0 and neighbor[0] + current[0] < len(grid[0]):
+                        if neighbor[1]+current[1] >= 0 and neighbor[1] + current[1] < len(grid):
+                            next_cell = [neighbor[0] + current[0], neighbor[1] + current[1]]
+                            if next_cell not in visited:
+                                if grid[next_cell[1]][next_cell[0]] != 1:
+                                    queue.append(next_cell)
+                                    path.append({"Current": current, "Next": next_cell})
+        shortest = [target]
+        while target != start:
+            for step in path:
+                if step["Next"] == target:
+                    target = step["Current"]
+                    shortest.insert(0, step["Current"])
+        return shortest
 
 
     def get_random_direction(self):
