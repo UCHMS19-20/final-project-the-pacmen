@@ -24,6 +24,7 @@ class App:
         self.cell_height = MAZE_HEIGHT//ROWS
         self.walls = []
         self.coins = []
+        self.fruit = []
         self.enemies = []
         self.e_pos = []
         self.p_pos = None
@@ -79,20 +80,25 @@ class App:
         with open("walls.txt", 'r') as file:
             for yidx, line in enumerate(file):
                 for xidx, char in enumerate(line):
-                    # 1's are equivalent to walls
+                    # 1's are equivalent to where walls are located
                     if char == "1":
                         self.walls.append(vec(xidx, yidx))
-                    # C's are equivalent to coins
+                    # C's are equivalent to where coins are located
                     elif char == "C":
                         self.coins.append(vec(xidx, yidx))
-                    # P is equivalent to pacman
+                    # P is equivalent to where pacman is located
                     elif char == "P":
                         self.p_pos = [xidx, yidx]
                     #these numbers are equivalent to the ghosts positions on the boardgame
                     elif char in ["2", "3", "4", "5"]:
                         self.e_pos.append([xidx, yidx])
-                    elif char == "B":
+                    # H is equivalent to the holes in the wall where the enemies start
+                    elif char == "H":
                         pygame.draw.rect(self.background, BLACK, (xidx*self.cell_width, yidx*self.cell_height, self.cell_width, self.cell_height))
+                    # F is equivalent to where the fruit is located
+                    elif char == "F":
+                        self.fruit.append(vec(xidx, yidx))
+
     #makes the enemies in location
     def make_enemies(self):
         for idx, pos in enumerate(self.e_pos):
@@ -110,7 +116,7 @@ class App:
 ##########################START FUNCTIONS###################################################
     #this is what starts the game, all of the starting positions of enemies, coins, pacman, etc.
     def reset(self):
-        self.player.lives = 3
+        self.player.lives = 2
         self.player.current_score = 0
         self.player.grid_pos = vec(self.player.starting_pos)
         self.player.pix_pos = self.player.get_pix_pos()
@@ -119,14 +125,25 @@ class App:
             enemy.grid_pos = vec(enemy.starting_pos)
             enemy.pix_pos = enemy.get_pix_pos()
             enemy.direction *= 0
-        #this bit of code is checking if a coin has been eaten or not. If it has been eaten, it gets added to the list via the position and a point gets added to the current score
+        
+        
+        #this bit of code is checking where the coin is on the walls.txt grid
         self.coins = []
+        self.fruit = []
 
         with open("walls.txt", 'r') as file:
             for yidx, line in enumerate(file):
                 for xidx, char in enumerate(line):
                     if char == 'C':
                         self.coins.append(vec(xidx, yidx))
+        self.state = "playing"
+
+        #this code is checking where the fruit is on the walls.txt grid
+        with open("walls.txt", 'r') as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == 'F':
+                        self.fruit.append(vec(xidx, yidx))
         self.state = "playing"
 
 
@@ -191,7 +208,10 @@ class App:
         self.screen.fill(BLACK) 
         #this makes the background collor black
         self.screen.blit(self.background, (TOP_BOTTOM_MARGIN//2, TOP_BOTTOM_MARGIN//2))
+        #draws coins
         self.draw_coins()
+        #draws fruit
+        self.draw_fruit()
         #self.draw_grid()
         #draws text once in the actual game
         self.draw_text('CURRENT SCORE: {}'.format(self.player.current_score), self.screen, [200,0], 18, WHITE, START_FONT)
@@ -218,10 +238,17 @@ class App:
     
 
 
-    #this here allows the game to generate the coins in which the player could collect 
+    #this here allows the game to draw the coins in which the player could collect 
     def draw_coins(self):
         for coin in self.coins:
             pygame.draw.circle(self.screen, (70, 100, 200), (int(coin.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(coin.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+    
+    #this here allows the game to draw the fruit in which the player could collect for 200 points
+    def draw_fruit(self):
+        for fruit in self.fruit:
+            pygame.draw.circle(self.screen, (236, 219, 83), (int(fruit.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(fruit.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+
+
 
     # this describes how the player can replay or exit the game
     def game_over_events(self):
