@@ -43,11 +43,14 @@ class Player:
             pygame.draw.circle(self.app.screen, PLAYER_COLOR, (30 + 20*x, HEIGHT - 15), 7)
 
 
+    #this function determines if pacman is on a coin or not. This checks to see if the entirety of pacmans body is on the full coin.
     def on_coin(self):
         if self.grid_pos in self.app.coins:
+            #pacman has to be on the entirety of the coin in the x direction, grid square doesnt really matter
             if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
                 if self.direction == vec(1,0) or self.direction == vec(-1, 0):
                     return True
+            #same in y direction as in x direction
             if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
                 if self.direction == vec(0, 1) or self.direction == vec(0, -1):
                     return True    
@@ -77,7 +80,7 @@ class Player:
         if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
             if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0):
                 return True
-
+    #this function determines if pacman can move in a certain direction. Is there a wall?
     def can_move(self):
         for wall in self.app.walls:
             if vec(self.grid_pos+self.direction) == wall:

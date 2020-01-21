@@ -4,7 +4,7 @@ from settings import *
 
 vec = pygame.math.Vector2
 
-
+#this class contains all of the functions necessary for the enemies to be implemented into the game
 class Enemy:
     def __init__(self, app, pos, number):
         self.app = app
@@ -18,7 +18,8 @@ class Enemy:
         self.personality = self.set_personality()
         self.target = None
         self.speed = self.set_speed()
-
+   
+    #updates the ghosts and tells them what to do at every moment in time. Updates what they are doing
     def update(self):
         self.target = self.set_target()
         if self.target != self.grid_pos:
@@ -29,17 +30,18 @@ class Enemy:
         # setting grid position in reference to pixel position
         self.grid_pos[0] = (self.pix_pos[0]-TOP_BOTTOM_MARGIN + self.app.cell_width//2)//self.app.cell_width+1
         self.grid_pos[1] = (self.pix_pos[1]-TOP_BOTTOM_MARGIN + self.app.cell_height//2)//self.app.cell_height+1
-
+    #draws the ghosts in the correct location
     def draw(self):
         pygame.draw.circle(self.app.screen, self.color, (int(self.pix_pos.x), int(self.pix_pos.y)), self.radius)
     
+    #determines the speed for all of the ghosts when the game is going
     def set_speed(self):
         if self.personality in ["speedy", "scared"]:
             speed = 2
         else:
             speed = 1
         return speed
-
+    #this whole function sets the target as pacman for the speedy and slow ghosts. This locks these ghosts onto pacman
     def set_target(self):
         if self.personality == "speedy" or self.personality == "slow":
             return self.app.player.grid_pos
@@ -53,23 +55,31 @@ class Enemy:
             else:
                 return vec(COLS-2, ROWS-2)
         
-    
+    #this bit of code "tells" the ghosts when to move
     def time_to_move(self):
+        #if ghost runs into wall in the x direction, move in the y
         if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
             if self.direction == vec(1, 0) or self.direction == vec(-1, 0) or self.direction == vec(0, 0):
                 return True
+        #if ghost runs into wall in the y direction, move in x direction
         if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
             if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0):
                 return True
         return False
 
+
+    #this code determines how the ghosts move. The movement of the ghost depends on the personality
     def move(self):
+        #random ghost moves randomly
         if self.personality == "random":
             self.direction = self.get_random_direction()
+        #slow ghost will be following pacman, but slowly
         if self.personality == "slow":
             self.direction = self.get_path_direction(self.target)
+        #speedy ghost will be attached to pacman, following him at the same rate. THE SELF.TARGET allows the ghosts to know to be attached and follow pacman.
         if self.personality == "speedy":
             self.direction = self.get_path_direction(self.target)
+        #the scared ghost is attached to pacman via self.target, but is scared of him so runs away consistently
         if self.personality == "scared":
             self.direction = self.get_path_direction(self.target)
 
@@ -83,7 +93,7 @@ class Enemy:
         path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)], [int(target[0]), int(target[1])])
         return path[1]
 
-
+    #basically, all of this code is just making it possible for the certain ghosts to follow pacman
     def BFS(self, start, target):
         grid = [[0 for x in range(28)] for x in range(30)]
         for cell in self.app.walls:
@@ -116,7 +126,7 @@ class Enemy:
                     shortest.insert(0, step["Current"])
         return shortest
 
-
+    #this code determines the random direction that the ghosts will move in, figures out which way the ghosts will move
     def get_random_direction(self):
         while True:
             number = random.randint(-2, 1)
@@ -133,12 +143,14 @@ class Enemy:
                 break
         return vec(x_dir, y_dir)
 
-
+    
     def get_pix_pos(self):
         return vec((self.grid_pos.x*self.app.cell_width)+TOP_BOTTOM_MARGIN//2+
         self.app.cell_width//2, (self.grid_pos.y*self.app.cell_height)+
         TOP_BOTTOM_MARGIN//2+self.app.cell_height//2)
 
+    #this function determines how the ghosts look in the game
+    #each ghost is assigned to a number, and that number gets a color
     def set_color(self):
         if self.number == 0:
             return (45, 80, 200)
@@ -148,7 +160,8 @@ class Enemy:
             return (190, 30, 30)
         if self.number == 3:
             return (220, 160, 30)
-       
+
+    #this determines the ghosts personalities, or how they move in the game once ran. Each ghost has their own personality.  
     def set_personality(self):
         if self.number == 0:
             return "speedy"
