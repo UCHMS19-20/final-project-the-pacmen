@@ -4,7 +4,7 @@ from settings import *
 
 vec = pygame.math.Vector2
 
-#this class is based on how the enemy will be implented in the game and how the enemy will be 
+
 class Enemy:
     def __init__(self, app, pos, number):
         self.app = app
@@ -139,9 +139,6 @@ class Enemy:
         self.app.cell_width//2, (self.grid_pos.y*self.app.cell_height)+
         TOP_BOTTOM_MARGIN//2+self.app.cell_height//2)
 
-
-#this describes how the ghosts will look
-#each color is assigned to its respective ghost
     def set_color(self):
         if self.number == 0:
             return (45, 80, 200)
@@ -151,8 +148,7 @@ class Enemy:
             return (190, 30, 30)
         if self.number == 3:
             return (220, 160, 30)
-
-#this here describes the different ghost personalities.  Each ghost is assigned a different characteristic     
+       
     def set_personality(self):
         if self.number == 0:
             return "speedy"

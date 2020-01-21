@@ -129,8 +129,6 @@ class App:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-                #this "if" function basically states that if the player presses down the spacebar
-                #then the game will begin
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.state = 'playing'
     
@@ -194,12 +192,9 @@ class App:
             enemy.draw()
         pygame.display.update() 
 
-#this describes whenever the player interacts with the ghosts. 
-#whenever the player hits them , the player will lose one life.
     def remove_life(self):
         self.player.lives -= 1
         if self.player.lives == 0:
-            #when the player is on the last life and they hit the ghost, then the game is over
             self.state = "game over"
         else:
             self.player.grid_pos = vec(self.player.starting_pos)
@@ -212,11 +207,11 @@ class App:
     
 
 
-# this here allows the game to generate the coins in which the player could collect
+
     def draw_coins(self):
         for coin in self.coins:
             pygame.draw.circle(self.screen, (70, 100, 200), (int(coin.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(coin.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
-# this here describes when the player wants to exit out of the game.  
+
     def game_over_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -228,13 +223,11 @@ class App:
 
     def game_over_update(self):
         pass
-# this is for when the player has been attacked by the ghosts and lost all of their lives while playing
+
     def game_over_draw(self):
         self.screen.fill(BLACK)
         quit_text = "Press ESC to QUIT"
-        #when the player presses the escape key, the program will quit. 
         again_text = "Press SPACE to PLAY AGAIN"
-        #when the player presses the spacebar, the game will reset and play 
         self.draw_text("GAME OVER  ¯\_(:/)_/¯", self.screen, [WIDTH//2, 100], 52, RED, "arial", centered=True)
         self.draw_text(again_text, self.screen, [WIDTH//2, HEIGHT//2], 36, (190, 190, 190), "arial", centered=True)   
         self.draw_text(quit_text, self.screen, [WIDTH//2, HEIGHT//1.5], 36, (190, 190, 190), "arial", centered=True)
