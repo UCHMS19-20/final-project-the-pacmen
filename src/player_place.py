@@ -30,21 +30,22 @@ class Player:
         self.grid_pos[0] = (self.pix_pos[0]-TOP_BOTTOM_MARGIN+self.app.cell_width//2)//self.app.cell_width+1
         self.grid_pos[1] = (self.pix_pos[1]-TOP_BOTTOM_MARGIN+self.app.cell_height//2)//self.app.cell_height+1
         
+        #this makes pacman eat the coin if he is on the coin using the on_coin and eat_coin functions
         if self.on_coin():
             self.eat_coin()
-
+        #this makes pacman eat the fruit if he is on the fruit using the on_fruit and eat_fruit functions
         if self.on_fruit():
             self.eat_fruit()
-
+    
+    
+    #draws pacmans shape
     def draw(self):
         pygame.draw.circle(self.app.screen, PLAYER_COLOR, (int(self.pix_pos.x), int(self.pix_pos.y)), self.app.cell_width//2-2)
-
-        #drawing the grid pos rect 
-        #pygame.draw.rect(self.app.screen, RED, (self.grid_pos[0]*self.app.cell_width+TOP_BOTTOM_MARGIN//2, self.grid_pos[1]*self.app.cell_height+TOP_BOTTOM_MARGIN//2, self.app.cell_width, self.app.cell_height))
 
         for x in range(self.lives):
             pygame.draw.circle(self.app.screen, PLAYER_COLOR, (30 + 20*x, HEIGHT - 15), 7)
 
+    ##################################COIN STUFF########################################################33
 
     #this function determines if pacman is on a coin or not. This checks to see if the entirety of pacmans body is on the full coin.
     def on_coin(self):
@@ -58,11 +59,20 @@ class Player:
                 if self.direction == vec(0, 1) or self.direction == vec(0, -1):
                     return True    
         return False
-
+    #this code adds a score of 1 to the current score when pacman eats a coin, and it removes the coin eaten from the maze
     def eat_coin(self):
         self.app.coins.remove(self.grid_pos)
         self.current_score += 1
 
+    ########################################END OF COIN STUFF#####################################
+
+
+    
+   
+    #################################FRUIT STUFF###################################################
+   
+   
+    #this code determines if pacman is actually on the fruit or not. If he is not on the fruit he will not eat the fruit
     def on_fruit(self):
         if self.grid_pos in self.app.fruit:
             if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
@@ -74,9 +84,13 @@ class Player:
                     return True    
         return False
     
+    
+    #this code adds a score of 200 points to the current score when the pacman eats a fruit, also removes the fruit from the maze
     def eat_fruit(self):
         self.app.fruit.remove(self.grid_pos)
         self.current_score += 200
+
+    ##########################################END OF FRUIT STUFF#####################################33
             
 
 
@@ -84,12 +98,13 @@ class Player:
     def move(self, direction):
         self.stored_direction = direction
     
+    #determines the pixel position of pacman
     def get_pix_pos(self):
         return vec((self.grid_pos[0]*self.app.cell_width)+TOP_BOTTOM_MARGIN//2+
         self.app.cell_width//2, (self.grid_pos[1]*self.app.cell_height) +
         TOP_BOTTOM_MARGIN//2+self.app.cell_height//2)
         
-        print(self.grid_pos, self.pix_pos)
+        #print(self.grid_pos, self.pix_pos)
 
     #this part makes it pacman cannot move in the x or y direction until he is in a full grid square, he is essentially locked until he is in a full grid square
     def time_to_move(self):
@@ -99,6 +114,8 @@ class Player:
         if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
             if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0):
                 return True
+    
+    
     #this function determines if pacman can move in a certain direction. Is there a wall?
     def can_move(self):
         for wall in self.app.walls:

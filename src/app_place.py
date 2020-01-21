@@ -62,7 +62,7 @@ class App:
         sys.exit()
 
 ##################### HELP FUNCTIONS ###########################
-#helps draw the text and allows us to make it what we want
+#helps draw the text and allows us to make it what we want (colors, location, font, etc)
     def draw_text(self, words, screen, pos, size, color, font_name, centered=False):
         font = pygame.font.SysFont(font_name, size)
         text = font.render(words, False, color)
@@ -104,7 +104,7 @@ class App:
         for idx, pos in enumerate(self.e_pos):
             self.enemies.append(Enemy(self, vec(pos), idx))
         #print(self.walls)
-
+    #this code draws the grid of the game and makes the paths, but the grid is not shown
     def draw_grid(self):
         for x in range(WIDTH//self.cell_width):
             pygame.draw.line(self.background, GREY, (x*self.cell_width, 0), (x*self.cell_width, HEIGHT))
@@ -180,7 +180,7 @@ class App:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-                #used to control the player to move around
+                #allows the user to use arrow keys to move pacman around
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     self.player.move(vec(-1, 0))
@@ -212,10 +212,12 @@ class App:
         self.draw_coins()
         #draws fruit
         self.draw_fruit()
-        #self.draw_grid()
+        
+
         #draws text once in the actual game
         self.draw_text('CURRENT SCORE: {}'.format(self.player.current_score), self.screen, [200,0], 18, WHITE, START_FONT)
-        #self.draw_text('HIGH SCORE: 0', self.screen, [WIDTH//2+60,0], 18, WHITE, START_FONT)
+        
+        #draws stuff shown
         self.player.draw()
         for enemy in self.enemies:
             enemy.draw()
@@ -263,7 +265,7 @@ class App:
     def game_over_update(self):
         pass
 
-    # this is for when the player loses all of their lives. This code just displays text on the screen asking the player what the would like to do
+    # this is for when the player loses all of their lives. This code just displays text on the screen asking the player what the would like to do after they lose the game (ending screen)
     def game_over_draw(self):
         self.screen.fill(BLACK)
         quit_text = "Press ESC to QUIT"

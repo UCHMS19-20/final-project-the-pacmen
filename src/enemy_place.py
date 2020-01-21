@@ -4,7 +4,7 @@ from settings import *
 
 vec = pygame.math.Vector2
 
-
+#this whole class contains of the parts necessary for the enemies to run
 class Enemy:
     def __init__(self, app, pos, number):
         self.app = app
@@ -19,6 +19,7 @@ class Enemy:
         self.target = None
         self.speed = self.set_speed()
 
+    #this updates the position of the target(pacman) for the enemies to get
     def update(self):
         self.target = self.set_target()
         if self.target != self.grid_pos:
@@ -30,9 +31,11 @@ class Enemy:
         self.grid_pos[0] = (self.pix_pos[0]-TOP_BOTTOM_MARGIN + self.app.cell_width//2)//self.app.cell_width+1
         self.grid_pos[1] = (self.pix_pos[1]-TOP_BOTTOM_MARGIN + self.app.cell_height//2)//self.app.cell_height+1
 
+    #defines the function that draws the enemy
     def draw(self):
         pygame.draw.circle(self.app.screen, self.color, (int(self.pix_pos.x), int(self.pix_pos.y)), self.radius)
     
+    #determines the speed of each enemy
     def set_speed(self):
         if self.personality in ["speedy", "scared"]:
             speed = 2
@@ -40,6 +43,7 @@ class Enemy:
             speed = 1
         return speed
 
+    #this determines which enemies are set out to go get pacman
     def set_target(self):
         if self.personality == "speedy" or self.personality == "slow":
             return self.app.player.grid_pos
@@ -53,7 +57,7 @@ class Enemy:
             else:
                 return vec(COLS-2, ROWS-2)
         
-    
+    #this bit of code tells the enemies when it is time to move from a wall so they dont just sit there
     def time_to_move(self):
         if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
             if self.direction == vec(1, 0) or self.direction == vec(-1, 0) or self.direction == vec(0, 0):
@@ -63,27 +67,34 @@ class Enemy:
                 return True
         return False
 
+    #this code tells each individual enemy how to move
     def move(self):
+        #the random ghost will move in a random direction
         if self.personality == "random":
             self.direction = self.get_random_direction()
+        #slow ghost will be chasing pacman slowly
         if self.personality == "slow":
             self.direction = self.get_path_direction(self.target)
+        #speedy ghost will be chasing pacman fast
         if self.personality == "speedy":
             self.direction = self.get_path_direction(self.target)
+        #scared ghost will be running away from pacman
         if self.personality == "scared":
             self.direction = self.get_path_direction(self.target)
 
+    #this code tells the enemy which direction to move
     def get_path_direction(self, target):
         next_cell = self.find_next_cell(target)
         xdir = next_cell[0] - self.grid_pos[0]
         ydir = next_cell[1] - self.grid_pos[1]
         return vec(xdir, ydir)
 
+    #this bit of code is telling the enemy ghosts how to find the next cell
     def find_next_cell(self, target):
         path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)], [int(target[0]), int(target[1])])
         return path[1]
 
-
+    #LOOK AT THIS CODE MIKEY
     def BFS(self, start, target):
         grid = [[0 for x in range(28)] for x in range(30)]
         for cell in self.app.walls:
@@ -117,6 +128,7 @@ class Enemy:
         return shortest
 
 
+
     def get_random_direction(self):
         while True:
             number = random.randint(-2, 1)
@@ -138,7 +150,9 @@ class Enemy:
         return vec((self.grid_pos.x*self.app.cell_width)+TOP_BOTTOM_MARGIN//2+
         self.app.cell_width//2, (self.grid_pos.y*self.app.cell_height)+
         TOP_BOTTOM_MARGIN//2+self.app.cell_height//2)
-
+    
+    
+    #all of this code just sets the color for each individual ghost enemy
     def set_color(self):
         if self.number == 0:
             return (45, 80, 200)
@@ -149,12 +163,17 @@ class Enemy:
         if self.number == 3:
             return (220, 160, 30)
        
+    #all of this code sets the personality of the ghost
     def set_personality(self):
+        #this is the fast ghost
         if self.number == 0:
             return "speedy"
+        #this is the slow ghost
         elif self.number == 1:
             return "slow"
+        #this ghost will move randomly
         elif self.number == 2:
             return "random"
+        #this ghose will be scared of pacman
         else: 
             return "scared"
