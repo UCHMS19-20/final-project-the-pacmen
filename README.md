@@ -1,50 +1,25 @@
-# Intro to Programming Final Project - Fall 2019
+# Pacman Coded in Python - FINAL PROJECT by Michael Graham and Thomas Turon
 
-Please note that this website and the repository associated with it are the official source of info for the project. I will post all updates here. Please note that my updates will not be reflected in your repository, only in mine. Updates to the assignment info will be posted [here](https://jgerstein.github.io/FinalProject19/), resources will be on [the resources page](https://jgerstein.github.io/FinalProject19/resources), and sample code will be in the main repository's [examples](https://github.com/jgerstein/FinalProject19/tree/master/examples) folder.
+Pacman is 2-dimensional game where the user controls a figure known as Pacman. All Pacman wants to do is travel around in a maze and eat coins and fruit. The user can control Pacman using the arrow keys, which will navigate him around the walls. But, there are enemies known as ghosts that are constantly chasing Pacman. These ghosts try to kill Pacman and take away his lives. But, if Pacman manages to navigate around the ghosts and maze walls, he has the opportunity to eat all the coins and fruit which makes him VICTORIOUS!
 
-## Goal
 
-Plan, code, document, and present a game written in Python. I encourage you to include graphics with Pygame or another game engine, but will not require it.
+## How to Play Pacman
 
-## Criteria
+Once the game is run, the user will be prompted with a start-up screen asking the user to push the space bar. Once the spacebar is
+clicked, the game of Pacman will start. After the game starts, the ghosts will be released from their cage and they will start chasing Pacman. The user can use the arrow keys (up, down, left, right) to navigate Pacman around the maze and away from the ghosts. Pacman cannot run through walls, so the user must skillfully navigate him through the complex maze with the arrow keys to stay alive. Once Pacman has lost all of his lives or has eaten all of the fruit and coins, the game will end and the user will be prompted to press the spacebar to play again, or to click the escape key to quit.
 
-Excellent work will include:
 
-* Clean, well-written, effective code
-* Version control in Git
-* Clear documentation of how te code works
-* A presentation of the game and of the process of creating it
-* Citations (MLA format) of the resources you used.
+## MLA Cited Sources
 
-## Expectations
+Our source is a 21 part series by A Plus Coding on YouTube. The series is called Pacman in Python. I sited the first and last video in the series (Part 1 and Part 21).
 
-### General
+"Pacman in Python - Part 1 - Intro and Setting Up." YouTube, uploaded by A Plus Coding, 19 Feb. 2019, https://www.youtube.com/watch?v=ZdwRcte00oU&list=PLryDJVmh-ww3AMl8NSjp9YygWWTOfePu7&index=21.
 
-* This is intended as an individual project. You may help each other, but you are responsible for your own work.
-* I am willing to consider partnerships for larger and more complex projects
-* You may (and are encouraged to) use resources you find online, but may not outright copy someone else's work and must credit your sources
-* Your work should challenge you but be achievable
-* You are expected to understand how your own code works. If you are not able to explain any part of your own code, that will be cause for concern
+“Pacman in Python - Part 21 - Final!” YouTube, uploaded by A Plus Coding, 24 June 2019, https://www.youtube.com/watch?v=iKDjF5mFgAY&list=PLryDJVmh-ww3AMl8NSjp9YygWWTOfePu7&index=1.
 
-### Code
 
-* Your code should make effective use of classes and/or functions. We will review in class
-* Your code should be clear and well documented with comments and appropriate naming schemes
-* Your code should be managed through Git. I will be expecting to see commits reflecting your progress as you work on the project, and would prefer to see feature branches and a stable master branch.
-* Your code should be as reliable and as free of bugs as you can manage
-
-## Timeline
-
-Date  | Checkpoint
-------|---------------------------------------------
-12/16 | Project Proposals Due (all classes)
-12/20 | Git repository setup check
-1/7   | First code checkpoint
-1/13  | Second code checkpoint
-1/17  | Third code checkpoint
-1/23  | Exams Begin. All code and documentation due
 
 ## Links
 
-* [Documentation](documentation.md)
-* [Resources](resources.md)
+(Presentation) https://docs.google.com/presentation/d/1ax5wQvcspRVcFyXGoAUXKnclcMyR-UYBaGW00ZuiVe0/edit#slide=id.p
+(Flowchart)
