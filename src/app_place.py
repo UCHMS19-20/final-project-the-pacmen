@@ -254,7 +254,7 @@ class App:
     #this here allows the game to draw the fruit in which the player could collect for 200 points
     def draw_fruit(self):
         for fruit in self.fruit:
-            pygame.draw.circle(self.screen, (36, 71, 12), (int(fruit.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(fruit.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+            pygame.draw.circle(self.screen, (255, 255, 255), (int(fruit.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(fruit.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
 
 #################################WINNING THE GAME STUFF######################################################
 
