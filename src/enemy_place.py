@@ -94,7 +94,7 @@ class Enemy:
         path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)], [int(target[0]), int(target[1])])
         return path[1]
 
-    #LOOK AT THIS CODE MIKEY
+    #all of this code makes it easy for the speedy and slow enemies to find the shortest path possible to get to pacman and kill him
     def BFS(self, start, target):
         grid = [[0 for x in range(28)] for x in range(30)]
         for cell in self.app.walls:

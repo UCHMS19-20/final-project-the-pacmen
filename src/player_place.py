@@ -13,7 +13,7 @@ class Player:
         self.able_to_move = True
         self.current_score = 0
         self.speed = 2
-        self.lives = 1
+        self.lives = 2
 
 #this is check the position of the pacman himself. ALL OF THIS LOCKS PACMAN INTO PLACES IN THE X,Y grid.
     def update(self):

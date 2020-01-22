@@ -54,6 +54,10 @@ class App:
                 self.game_over_events()
                 self.game_over_update()
                 self.game_over_draw()
+            elif self.state == 'win':
+                self.game_win_events()
+                self.game_win_update()
+                self.game_win_draw()
             else:
                 self.running = False
             self.clock.tick(FPS)
@@ -147,8 +151,6 @@ class App:
         self.state = "playing"
 
 
-
-
     #this determines if the user has started the game or not
     def start_events(self):
         for event in pygame.event.get():
@@ -191,16 +193,20 @@ class App:
                 if event.key == pygame.K_DOWN:
                      self.player.move(vec(0, 1))
     
-#############################################################################
+
     #updates enemies
     def playing_update(self):
         self.player.update()
         for enemy in self.enemies:
             enemy.update()
-        #if the ghost touches pacman, remove a life. this is what is checking to see if pacman has touched a ghost or not, if he does, he dies
+        #if the ghost touches pacman, remove a life
         for enemy in self.enemies:
             if enemy.grid_pos == self.player.grid_pos:
                 self.remove_life()
+         
+        #if the user eats all the coins and fruit, the score will be 1083, ending the game and making the win screen
+        if self.player.current_score == 1083:
+            self.state = "win"
     
 ############################################################################   
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
@@ -243,15 +249,42 @@ class App:
     #this here allows the game to draw the coins in which the player could collect 
     def draw_coins(self):
         for coin in self.coins:
-            pygame.draw.circle(self.screen, (70, 100, 200), (int(coin.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(coin.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+            pygame.draw.circle(self.screen, (252, 2, 0), (int(coin.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(coin.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
     
     #this here allows the game to draw the fruit in which the player could collect for 200 points
     def draw_fruit(self):
         for fruit in self.fruit:
-            pygame.draw.circle(self.screen, (236, 219, 83), (int(fruit.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(fruit.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+            pygame.draw.circle(self.screen, (36, 71, 12), (int(fruit.x*self.cell_width)+self.cell_width//2+TOP_BOTTOM_MARGIN//2, int(fruit.y*self.cell_height)+self.cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+
+#################################WINNING THE GAME STUFF######################################################
 
 
+    #this code gives the user options to choose what they want to do if they win the game. play again? quit?
+    def game_win_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.reset()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.running = False
+    
+    def game_win_update(self):
+        pass
 
+    #all of this code draws the winner screen once the game of pacman is won, all the coins eaten
+    def game_win_draw(self):
+        self.screen.fill(BLACK)
+        quit_text = "Press ESC to QUIT"
+        again_text = "Press SPACE to PLAY AGAIN"
+        self.draw_text("YOU WIN!!!", self.screen, [WIDTH//2, 100], 52, GREEN, "arial", centered=True)
+        self.draw_text(again_text, self.screen, [WIDTH//2, HEIGHT//2], 36, (190, 190, 190), "arial", centered=True)   
+        self.draw_text(quit_text, self.screen, [WIDTH//2, HEIGHT//1.5], 36, (190, 190, 190), "arial", centered=True)
+        pygame.display.update()  
+    
+    #################################END OF THE WINNING GAME STUFF##############################################
+
+    #################################GAME OVER STUFF########################################################
     # this describes how the player can replay or exit the game
     def game_over_events(self):
         for event in pygame.event.get():
@@ -273,4 +306,9 @@ class App:
         self.draw_text("GAME OVER  ¯\_(:/)_/¯", self.screen, [WIDTH//2, 100], 52, RED, "arial", centered=True)
         self.draw_text(again_text, self.screen, [WIDTH//2, HEIGHT//2], 36, (190, 190, 190), "arial", centered=True)   
         self.draw_text(quit_text, self.screen, [WIDTH//2, HEIGHT//1.5], 36, (190, 190, 190), "arial", centered=True)
-        pygame.display.update()     
+        pygame.display.update()   
+
+
+    ##############################END OF GAME OVER STUFF##############################################################3
+
+    
