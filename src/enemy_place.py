@@ -94,6 +94,9 @@ class Enemy:
         path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)], [int(target[0]), int(target[1])])
         return path[1]
 
+################START OF BFS FUNCTION############################3
+
+
     #all of this code makes it easy for the speedy and slow enemies to find the shortest path possible to get to pacman and kill him
     def BFS(self, start, target):
         grid = [[0 for x in range(28)] for x in range(30)]
@@ -119,6 +122,7 @@ class Enemy:
                                 if grid[next_cell[1]][next_cell[0]] != 1:
                                     queue.append(next_cell)
                                     path.append({"Current": current, "Next": next_cell})
+        #shortest possible path for the ghosts
         shortest = [target]
         while target != start:
             for step in path:
@@ -127,8 +131,10 @@ class Enemy:
                     shortest.insert(0, step["Current"])
         return shortest
 
+########################END OF BFS FUNCTION#########################
 
-
+   
+   #determines the direction that the "random" moving ghost should move
     def get_random_direction(self):
         while True:
             number = random.randint(-2, 1)
@@ -145,7 +151,7 @@ class Enemy:
                 break
         return vec(x_dir, y_dir)
 
-
+    #determines the pixel position on the grid for the ghosts while the game is running (vector position)
     def get_pix_pos(self):
         return vec((self.grid_pos.x*self.app.cell_width)+TOP_BOTTOM_MARGIN//2+
         self.app.cell_width//2, (self.grid_pos.y*self.app.cell_height)+

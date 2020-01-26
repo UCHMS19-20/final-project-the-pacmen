@@ -12,7 +12,7 @@ pygame.init()
 vec = pygame.math.Vector2 
 
 
-#going to have a screen
+#contains all of the stuff necessary for the game to run
 class App:
     def __init__(self):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -54,6 +54,7 @@ class App:
                 self.game_over_events()
                 self.game_over_update()
                 self.game_over_draw()
+            #this displays everythig on the screen for when the user WINS the game
             elif self.state == 'win':
                 self.game_win_events()
                 self.game_win_update()
@@ -107,18 +108,21 @@ class App:
     def make_enemies(self):
         for idx, pos in enumerate(self.e_pos):
             self.enemies.append(Enemy(self, vec(pos), idx))
-        #print(self.walls)
+    
     #this code draws the grid of the game and makes the paths, but the grid is not shown
     def draw_grid(self):
         for x in range(WIDTH//self.cell_width):
             pygame.draw.line(self.background, GREY, (x*self.cell_width, 0), (x*self.cell_width, HEIGHT))
         for x in range(HEIGHT//self.cell_height):
             pygame.draw.line(self.background, GREY, (0, x*self.cell_height), (WIDTH, x*self.cell_height))
-        #for coin in self.coins:
-            #pygame.draw.rect(self.background, (170, 180, 35), (coin.x*self.cell_width, coin.y*self.cell_height, self.cell_width, self.cell_height))
+
+
+
 
 ##########################START FUNCTIONS###################################################
+    
     #this is what starts the game, all of the starting positions of enemies, coins, pacman, etc.
+    
     def reset(self):
         self.player.lives = 2
         self.player.current_score = 0
@@ -165,24 +169,32 @@ class App:
     def start_update(self):
         pass
     
-############################################################################   
+###################START SCREEN########################
+
+
+
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
     def start_draw(self): 
-        #this makes the background color black
+        #makes the background screen black
         self.screen.fill(BLACK)
+        #intro screen stuff
         self.draw_text('PUSH THE SPACE BAR BABY', self.screen, [WIDTH//2, HEIGHT//2-50], START_TEXT_SIZE, (168, 130, 60), START_FONT, centered=True)
         self.draw_text('1 PLAYER ONLY', self.screen, [WIDTH//2, HEIGHT//2+50], START_TEXT_SIZE, (31, 100, 136), START_FONT, centered=True)
         self.draw_text('Ms. Gerstein A 3/4', self.screen, [WIDTH//2, HEIGHT//2+100], START_TEXT_SIZE, (168, 130, 60), START_FONT, centered=True)
-        #self.draw_text('High Score', self.screen, [4,0], START_TEXT_SIZE, (255, 255, 255), START_FONT)
+
         pygame.display.update() 
 
+#############END OF START SCREEN###################
 
-##############################playing fuctions#################
+
+
+
+##############################playing fuctions(while the game is going on)#################
     def playing_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-                #allows the user to use arrow keys to move pacman around
+                #allows the user to use arrow keys to move pacman around using the arrow keys
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     self.player.move(vec(-1, 0))
@@ -207,6 +219,10 @@ class App:
         #if the user eats all the coins and fruit, the score will be 1083, ending the game and making the win screen
         if self.player.current_score == 1083:
             self.state = "win"
+
+    #########END OF PLAYING FUNCTIONS#############
+
+    
     
 ############################################################################   
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff

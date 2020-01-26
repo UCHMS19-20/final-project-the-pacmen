@@ -94,17 +94,17 @@ class Player:
             
 
 
-
+    #determines if the ghost should move
     def move(self, direction):
         self.stored_direction = direction
     
-    #determines the pixel position of pacman
+    #determines the pixel position of pacman (actual position on the grid)
     def get_pix_pos(self):
         return vec((self.grid_pos[0]*self.app.cell_width)+TOP_BOTTOM_MARGIN//2+
         self.app.cell_width//2, (self.grid_pos[1]*self.app.cell_height) +
         TOP_BOTTOM_MARGIN//2+self.app.cell_height//2)
         
-        #print(self.grid_pos, self.pix_pos)
+
 
     #this part makes it pacman cannot move in the x or y direction until he is in a full grid square, he is essentially locked until he is in a full grid square
     def time_to_move(self):
