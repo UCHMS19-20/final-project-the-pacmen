@@ -1,7 +1,7 @@
 import pygame
 from settings import * 
 vec = pygame.math.Vector2
-######this is where and the how player in the game could be implented#####################
+######this is where and the how player (PACMAN HIMSELF) in the game could be implented into the actual game#####################
 class Player:
     def __init__(self, app, pos):
         self.app = app 

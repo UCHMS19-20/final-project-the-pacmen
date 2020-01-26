@@ -36,7 +36,7 @@ class App:
 
       
 ############################################################################
-    
+    #this block of code is checking everything so everything RUNS on the screen properly 
     def run(self):
         while self.running:
             #this starts the whole game up
@@ -121,7 +121,7 @@ class App:
 
 ##########################START FUNCTIONS###################################################
     
-    #this is what starts the game, all of the starting positions of enemies, coins, pacman, etc.
+    #this is what starts the game when the player wants to reset it, all of the starting positions of enemies, coins, pacman, etc.
     
     def reset(self):
         self.player.lives = 2
@@ -190,6 +190,8 @@ class App:
 
 
 ##############################playing fuctions(while the game is going on)#################
+
+#all of this code gives the user the ability to control pacman during the game. ALL OF THIS IS WHILE THE GAME IS GOING ON
     def playing_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -222,7 +224,7 @@ class App:
 
     #########END OF PLAYING FUNCTIONS#############
 
-    
+
     
 ############################################################################   
 #this code draws the text and defines the color, height, font, etc. ALL OF THE GRAPHICS stuff
@@ -285,6 +287,8 @@ class App:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.running = False
     
+
+    #did player win?
     def game_win_update(self):
         pass
 
@@ -311,6 +315,8 @@ class App:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.running = False
 
+
+    #did player lose?
     def game_over_update(self):
         pass
 

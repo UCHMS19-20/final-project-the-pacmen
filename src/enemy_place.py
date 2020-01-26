@@ -4,7 +4,7 @@ from settings import *
 
 vec = pygame.math.Vector2
 
-#this whole class contains of the parts necessary for the enemies to run
+#this whole class contains all of the parts necessary for the enemies to run
 class Enemy:
     def __init__(self, app, pos, number):
         self.app = app
